@@ -9,7 +9,7 @@ use tokio_tungstenite::connect_async;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
-struct SyncSubscribeReposCommit {
+struct Commit {
     pub seq: i64,
     pub rebase: bool,
     pub too_big: bool,
@@ -17,16 +17,16 @@ struct SyncSubscribeReposCommit {
     pub commit: Cid,
     pub prev: Option<Cid>,
 
-    /* CAR file containing relevant blocks */
+    // CAR file containing relevant blocks
     pub blocks: ByteBuf,
-    pub ops: Vec<SyncSubscribeReposRepoOp>,
+    pub ops: Vec<RepoOp>,
 
     pub blobs: Vec<Cid>,
     pub time: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
-struct SyncSubscribeReposRepoOp {
+struct RepoOp {
     pub action: String,
     pub path: String,
     pub cid: Option<Cid>,
@@ -54,7 +54,7 @@ async fn main() {
 
             match header.t.as_str() {
                 "#commit" => {
-                    let commit: SyncSubscribeReposCommit = from_reader(&mut reader).unwrap();
+                    let commit: Commit = from_reader(&mut reader).unwrap();
 
                     println!(
                         "time: {} commit: {} blocks: {:?}",
