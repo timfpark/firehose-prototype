@@ -1,0 +1,16 @@
+[package]
+name = "stream"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bytes = "1.0"
+cid = { git = "https://github.com/timfpark/rust-cid", features= ["alloc", "serde-codec", "scale-codec"] }
+futures-util = "0.3"
+serde = {version = "1.0", features = ["derive"] }
+serde_bytes = "0.11"
+serde_cbor = "0.11"
+ciborium = "0.2"
+tokio = { version = "1.14", features = ["fs", "macros", "rt", "rt-multi-thread", "sync", "time"] }
+tokio-tungstenite = { version = "0.18", features = ["native-tls"] }
+url = "2"
