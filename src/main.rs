@@ -57,14 +57,17 @@ async fn main() {
                     let commit: Commit = from_reader(&mut reader).unwrap();
 
                     println!(
-                        "time: {} commit: {} blocks: {:?}",
+                        "time: {} commit: {}",
                         commit.time,
                         commit.commit.into_v1().unwrap(),
-                        commit.blocks.len()
                     );
+
+                    for op in commit.ops {
+                        println!("op: {:?}", op);
+                    }
                 }
                 _ => {
-                    println!("unknown header: {}", header.t);
+                    println!("UNKNOWN HEADER: {}", header.t);
                 }
             }
         })
